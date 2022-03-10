@@ -53,3 +53,19 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'rspec-rails', '~> 4.0.0'
+
+gem 'factory_bot_rails'
+
+gem 'shoulda-matchers'
+
+gem 'spring'
+
+gem 'spring-watcher-listen', '~> 2.0.0'
+
+gem 'spring-commands-rspec'
+
+gem 'mongoid-rspec'
+
+gem 'byebug'
+
+gem 'faker'

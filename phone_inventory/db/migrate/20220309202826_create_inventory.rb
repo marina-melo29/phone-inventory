@@ -1,6 +1,6 @@
-class CreateInventories < ActiveRecord::Migration[5.0]
+class CreateInventory < ActiveRecord::Migration[5.0]
   def change
-    create_table :inventories do |t|
+    create_table :cellphones do |t|
       t.string :manufacturer, limit: 25
       t.string :model, limit: 30
       t.string :color, limit: 30
