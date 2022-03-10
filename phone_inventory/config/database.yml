@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  database: phone_inventory_devel
+  pool: 5
+  host: localhost
+  timeout: 5000
+  username: <%= 'postgres' %>
+  password: <%= '1q2w3e' %>
+
+development:
+ <<: *default
+ database: phone_inventory_devel
+
+test:
+ <<: *default
+database: phone_inventory_test
+
+production:
+ <<: *default
+ database: phone_inventory
