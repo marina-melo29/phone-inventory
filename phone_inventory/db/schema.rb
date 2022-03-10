@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20220309202826) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "inventories", force: :cascade do |t|
+  create_table "cellphones", force: :cascade do |t|
     t.string   "manufacturer",      limit: 25
     t.string   "model",             limit: 30
     t.string   "color",             limit: 30
