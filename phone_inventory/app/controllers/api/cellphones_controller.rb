@@ -1,5 +1,7 @@
 class Api::CellphonesController < ApplicationController
 
+    require 'csv'
+
     def index
 
         cellphones = Cellphone.all
@@ -9,26 +11,52 @@ class Api::CellphonesController < ApplicationController
 
     def create
 
-        cellphone = Cellphone.new
+        csv = params[:csv]
 
-        cellphone.manufacturer      = params[:manufacturer]
-        cellphone.model             = params[:model]
-        cellphone.color             = params[:color]
-        cellphone.carrier_plan_type = params[:carrier_plan_type]
-        cellphone.quantity          = params[:quantity]
-        cellphone.price             = params[:price]
+        if (csv.present?)
+            
+            is_line_valid = true
 
-        if (cellphone.save)
-            render json: cellphone, status: 201
+            rows = []
+
+            CSV.foreach(csv).with_index do |line, index|
+
+                (line.count < 6) ? is_line_valid = false : ""
+                (index != 0) ? rows << line : ""
+                
+            end
+
+            if (is_line_valid)
+
+                csv_data = []
+
+                rows.each do |line|
+
+                    csv_data = Cellphone.create(manufacturer: line[0], model: line[1], color: line[2], carrier_plan_type: line[3], quantity: line[4], price: line[5])
+
+                end
+
+                render json: { csv: csv_data }, status: 201
+
+            else
+
+                render json: { errors: "invalid" }, status: 400
+
+            end
+
         else
-            render json: { errors: cellphone.errors }, status: 422
+
+            render json: { errors: "nil" }, status: 404
+
         end
 
     end
 
     def destroy
+
         Cellphone.destroy_all
         head 204
+
     end
 
 
