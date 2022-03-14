@@ -22,23 +22,16 @@ RSpec.describe 'Cellphone API' do
 
     end
 
-    describe 'POST /cellphones' do
+    # CSV
+    describe 'POST /cellphones' do  
+
         before do
-            post '/cellphones', 
-            params: { 
-                manufacturer: cellphone_params[:manufacturer], 
-                model: cellphone_params[:model], 
-                color: cellphone_params[:color],
-                carrier_plan_type: cellphone_params[:carrier_plan_type],
-                quantity: cellphone_params[:quantity], 
-                price: cellphone_params[:price]
-            }.to_json, 
-            headers: headers
+            post '/cellphones', params: { csv: csv }.to_json, headers: headers
         end
         
         context 'when params are valid' do
 
-            let(:cellphone_params) { attributes_for(:cellphone) }
+            let!(:csv) { "spec/csv_files/valid_test.csv" }.to_json
 
             it 'returns status code 201' do
                 expect(response).to have_http_status(201)
@@ -48,10 +41,20 @@ RSpec.describe 'Cellphone API' do
 
         context 'when params are not valid' do
 
-            let(:cellphone_params) { attributes_for(:cellphone, manufacturer: '') }
+            let!(:csv) { "spec/csv_files/invalid_test.csv" }.to_json
 
-            it 'returns status code 422' do
-                expect(response).to have_http_status(422)
+            it 'returns status code 400' do
+                expect(response).to have_http_status(400)
+            end
+
+        end
+
+        context 'when params are not present' do
+
+            let!(:csv) { nil }.to_json
+
+            it 'returns status code 404' do
+                expect(response).to have_http_status(404)
             end
 
         end
