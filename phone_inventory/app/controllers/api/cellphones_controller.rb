@@ -10,35 +10,23 @@ class Api::CellphonesController < ApplicationController
 
     end
 
-    def update
-        #puts params[:cellphone][:csv].inspect
-        # destroy
-
-        # uploaded_csv = params[:cellphone][:csv]
-
-        # File.open(Rails.root.join('public', 'uploads', uploaded_csv.original_filename), 'wb') do |file|
-        #     file.write(uploaded_csv.read)
-        # end
-        
-        # CSV.foreach("public/uploads/"+uploaded_csv.original_filename).with_index do |line, index|
-
-        #     puts line.inspect
-            
-        # end
-
-    end
-
     def create
 
-        csv = params[:csv]
+        Cellphone.destroy_all
+
+        csv = params[:cellphone][:csv]
 
         if (csv.present?)
-            
+
+            File.open(Rails.root.join('public', 'uploads', csv.original_filename), 'wb') do |file|
+                file.write(csv.read)
+            end
+                
             is_line_valid = true
 
             rows = []
 
-            CSV.foreach(csv).with_index do |line, index|
+            CSV.foreach("public/uploads/"+csv.original_filename).with_index do |line, index|
 
                 (line.count < 6) ? is_line_valid = false : ""
                 (index != 0) ? rows << line : ""

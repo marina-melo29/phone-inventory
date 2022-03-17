@@ -24,17 +24,19 @@
             <td>Quantity</td>
             <td>Price</td>
         </tr>
-        <% @cellphones.each do |cellphone| %>           
-               
-            <tr>
-                <td><%= cellphone.manufacturer %></td>
-                <td><%= cellphone.model %></td>
-                <td><%= cellphone.color %></td>
-                <td><%= cellphone.carrier_plan_type %></td>
-                <td><%= cellphone.quantity %></td>
-                <td><%= cellphone.price %></td>
-            </tr>
-            
+        <% if (@cellphones.present?) %>
+          <% @cellphones.each do |cellphone| %>           
+                
+              <tr>
+                  <td><%= cellphone.manufacturer %></td>
+                  <td><%= cellphone.model %></td>
+                  <td><%= cellphone.color %></td>
+                  <td><%= cellphone.carrier_plan_type %></td>
+                  <td><%= cellphone.quantity %></td>
+                  <td><%= cellphone.price %></td>
+              </tr>
+              
+          <% end %>
         <% end %>
     </table>
 
@@ -45,7 +47,7 @@
         <input type="submit" name="send" value="Update Table">
     </form> %>
     <br>
-    <%= form_for(:cellphone, url: "/api/update", format: :csv, method: :post) do |f| %>
+    <%= form_for(:cellphone, url: "/api/create", format: :csv, method: :post) do |f| %>
       <%= f.file_field :csv %>
       <br><br>
       <%= f.submit "SEND" %>

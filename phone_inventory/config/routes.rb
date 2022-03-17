@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
 
   get '/' => 'api/cellphones#index'
-  post '/api/update' => 'api/cellphones#update'
+  post '/api/create' => 'api/cellphones#create'
 
   namespace :api, defaults: { format: :json }, path: '/' do
 
