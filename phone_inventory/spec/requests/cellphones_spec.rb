@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Cellphone API' do
 
-    let!(:cellphone) { create(:cellphone) }
+    let!(:cellphone) { build(:cellphone) }
     let(:headers) do
         {
             'Accept'        => 'application/api.cellphone.inventory',
@@ -72,7 +72,7 @@ RSpec.describe 'Cellphone API' do
         end
 
         it 'removes cellphones from database' do
-            expect(Cellphone.all.count).to eq(0) 
+            expect(Cellphone.all.count).to eq(0)
         end
 
     end

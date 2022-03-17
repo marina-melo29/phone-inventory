@@ -4,8 +4,27 @@ class Api::CellphonesController < ApplicationController
 
     def index
 
-        cellphones = Cellphone.all
-        render json: { cellphones: cellphones }, status: 200
+        @cellphones = Cellphone.all
+        #render json: { cellphones: cellphones }, status: 200
+        render file: "#{Rails.root}/app/views/layouts/index.html.erb", status: 200
+
+    end
+
+    def update
+        #puts params[:cellphone][:csv].inspect
+        # destroy
+
+        # uploaded_csv = params[:cellphone][:csv]
+
+        # File.open(Rails.root.join('public', 'uploads', uploaded_csv.original_filename), 'wb') do |file|
+        #     file.write(uploaded_csv.read)
+        # end
+        
+        # CSV.foreach("public/uploads/"+uploaded_csv.original_filename).with_index do |line, index|
+
+        #     puts line.inspect
+            
+        # end
 
     end
 
@@ -27,7 +46,7 @@ class Api::CellphonesController < ApplicationController
             end
 
             if (is_line_valid)
-
+                
                 csv_data = []
 
                 rows.each do |line|
