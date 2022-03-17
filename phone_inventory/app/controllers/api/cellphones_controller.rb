@@ -18,19 +18,32 @@ class Api::CellphonesController < ApplicationController
 
         if (csv.present?)
 
-            File.open(Rails.root.join('public', 'uploads', csv.original_filename), 'wb') do |file|
-                file.write(csv.read)
-            end
-                
             is_line_valid = true
 
             rows = []
 
-            CSV.foreach("public/uploads/"+csv.original_filename).with_index do |line, index|
+            if (params[:test].present? && params[:test] == true)
 
-                (line.count < 6) ? is_line_valid = false : ""
-                (index != 0) ? rows << line : ""
+                CSV.foreach(csv.to_s).with_index do |line, index|
+
+                    (line.count < 6) ? is_line_valid = false : ""
+                    (index != 0) ? rows << line : ""
+                    
+                end
+
+            else
+
+                File.open(Rails.root.join('public', 'uploads', csv.original_filename), 'wb') do |file|
+                    file.write(csv.read)
+                end                    
                 
+                CSV.foreach("public/uploads/"+csv.original_filename).with_index do |line, index|
+
+                    (line.count < 6) ? is_line_valid = false : ""
+                    (index != 0) ? rows << line : ""
+                    
+                end
+
             end
 
             if (is_line_valid)

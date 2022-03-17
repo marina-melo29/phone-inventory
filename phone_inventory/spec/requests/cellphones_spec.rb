@@ -26,7 +26,7 @@ RSpec.describe 'Cellphone API' do
     describe 'POST /cellphones' do  
 
         before do
-            post '/cellphones', params: { cellphone: {csv: csv} }.to_json, headers: headers
+            post '/cellphones', params: { cellphone: { csv: csv }, test: true }.to_json, headers: headers
         end
         
         context 'when params are valid' do
