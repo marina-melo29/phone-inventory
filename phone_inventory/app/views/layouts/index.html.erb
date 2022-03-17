@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PhoneInventory</title>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <style>
+    table, th, td {
+        border:1px solid black;
+        padding: 10px;
+        font-size: small;
+    }
+  </style>
+
+  <body>
+
+    <table>
+        <tr>
+            <td>Manufacturer</td>
+            <td>Model</td>
+            <td>Color</td>
+            <td>Carrier Plan Type</td>
+            <td>Quantity</td>
+            <td>Price</td>
+        </tr>
+        <% @cellphones.each do |cellphone| %>           
+               
+            <tr>
+                <td><%= cellphone.manufacturer %></td>
+                <td><%= cellphone.model %></td>
+                <td><%= cellphone.color %></td>
+                <td><%= cellphone.carrier_plan_type %></td>
+                <td><%= cellphone.quantity %></td>
+                <td><%= cellphone.price %></td>
+            </tr>
+            
+        <% end %>
+    </table>
+
+    <br><br>
+    Update Table:
+    <%# <form action="/api/update" method="post" accept-charset="UTF-8" >
+        <input type="file" name="cellphones"/>
+        <input type="submit" name="send" value="Update Table">
+    </form> %>
+    <br>
+    <%= form_for(:cellphone, url: "/api/update", format: :csv, method: :post) do |f| %>
+      <%= f.file_field :csv %>
+      <br><br>
+      <%= f.submit "SEND" %>
+    <% end %>
+
+  </body>
+
+</html>
